@@ -8,18 +8,49 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, UITextFieldDelegate {
+    
+    @IBOutlet weak var userInput: UITextField!
+    @IBOutlet weak var emojigmaOutput: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.userInput.text = ""
+        self.emojigmaOutput.text = ""
+
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        var str = textField.text
+        println("You typed: \(str)")
+        return true
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func emojigmaEncode(sender: UIButton) {
+        
+        self.emojigmaOutput.text = self.emojigmaEncodeText(self.userInput.text)
+        
+        
     }
-
+    
+    func emojigmaEncodeText(var userString: String) -> String {
+        var encodedString = ""
+        
+        for c in userString {
+            println("\(c)")
+            
+            var x = c.hashValue
+            
+            x = x + 16
+            
+            var newX = String(x)
+            
+            println(x)
+            encodedString = encodedString + newX
+        }
+        return encodedString
+    }
 
 }
 
